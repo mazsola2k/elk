@@ -51,3 +51,10 @@ services:
 
 volumes:
   esdata:
+
+
+sudo firewall-cmd --permanent --add-port=5601/tcp
+sudo firewall-cmd --permanent --add-port=9200/tcp
+sudo firewall-cmd --permanent --add-port=5000/tcp
+sudo firewall-cmd --permanent --add-port=5000/udp
+sudo firewall-cmd --permanent --add-port=5044/tcp
