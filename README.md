@@ -52,9 +52,35 @@ services:
 volumes:
   esdata:
 
+Bring-up the container Image:
+
+podman-compose down
+podman-compose up -d
+
+Firewall settings:
+
+Port	Protocol	Service	Purpose
+5601/tcp	TCP	Kibana	Web UI for visualizing logs and Elasticsearch data
+9200/tcp	TCP	Elasticsearch	REST API for search, indexing, and queries
+5000/tcp	TCP	Logstash	Generic TCP input for receiving logs (e.g., from Filebeat or custom scripts)
+5000/udp	UDP	Logstash	Generic UDP input (often used for syslog or network devices)
+5044/tcp	TCP	Logstash	Beats input – used by Filebeat, Winlogbeat, etc., to send logs
+
+sudo systemctl status firewalld
 
 sudo firewall-cmd --permanent --add-port=5601/tcp
 sudo firewall-cmd --permanent --add-port=9200/tcp
 sudo firewall-cmd --permanent --add-port=5000/tcp
 sudo firewall-cmd --permanent --add-port=5000/udp
 sudo firewall-cmd --permanent --add-port=5044/tcp
+
+sudo firewall-cmd --reload
+
+sudo firewall-cmd --list-ports
+
+5601/tcp 9200/tcp 5000/tcp 5000/udp 5044/tcp
+
+Access from Remote Machine Now, from another machine, you can access:
+
+http://<your-redhat-ip>:5601 → Kibana
+http://<your-redhat-ip>:9200 → Elasticsearch API
